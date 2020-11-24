@@ -1,0 +1,8 @@
+{
+  "name": "Nume",
+  "age": "Varsta",
+  "address": {
+    "street": "Strada",
+    "number": "Nr"
+  }
+}
