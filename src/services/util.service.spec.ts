@@ -137,4 +137,18 @@ describe('UtilService', () => {
       expect(result[2]).instanceOf(OutOfSyncError);
     });
   });
+
+  describe('createEntry', () => {
+    it('should create a complete object based on the key path', () => {
+      const [keyPath, value] = ['parents.mother', 'Mother'];
+      const expected = {
+        parents: {
+          mother: 'Mother'
+        }
+      };
+
+      const result = utilService.createEntry(keyPath, value);
+      expect(result).deep.eq(expected);
+    });
+  });
 });

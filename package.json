@@ -10,6 +10,7 @@
     "build": "tsc -b",
     "validate-all": "npm run build && node dist/src/index.js validate ./i18n en.json",
     "validate-some": "npm run build && node dist/src/index.js validate ./i18n en.json ro.json",
+    "add": "npm run build && node dist/src/index.js add",
     "test": "ts-mocha src/**/*.spec.ts"
   },
   "repository": {
@@ -26,7 +27,9 @@
     "chai": "^4.2.0",
     "chalk": "^4.1.0",
     "commander": "^6.1.0",
-    "lodash": "^4.17.20"
+    "inquirer": "^7.3.3",
+    "lodash": "^4.17.20",
+    "rxjs": "^6.6.3"
   },
   "devDependencies": {
     "@tsconfig/node12": "^1.0.7",
@@ -34,6 +37,7 @@
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
     "@types/expect": "^24.3.0",
+    "@types/inquirer": "^7.3.1",
     "@types/lodash": "^4.14.165",
     "@types/mocha": "^8.0.4",
     "@types/node": "^14.14.2",

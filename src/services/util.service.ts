@@ -28,4 +28,19 @@ export class UtilService {
       })
       .filter(err => err !== null) as Invalid[];
   }
+
+  createEntry(keyPath: string, value: string) {
+    const keyParts = keyPath.split('.');
+    const entry: any = {};
+
+    // if reached the deepest level
+    // set the value
+    if (keyParts.length === 1) {
+      entry[keyParts[0]] = value;
+      return entry;
+    }
+
+    entry[keyParts[0]] = this.createEntry(keyParts.splice(1).join('.'), value);
+    return entry;
+  }
 }

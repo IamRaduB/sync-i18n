@@ -4,6 +4,7 @@ import { LoggerService } from './services/logger.service';
 import { LOGGER, NAME } from './config/constants';
 import { ValidateCommand } from './commands/validate.command';
 import { UtilService } from './services/util.service';
+import { AddTranslationCommand } from './commands/add-translation.command';
 
 class SyncTranslations {
   private program: Command;
@@ -16,6 +17,7 @@ class SyncTranslations {
 
   setup() {
     const validateCommand = new ValidateCommand(this.program, this.log.child(LOGGER.validate), this.fs, this.utilService);
+    const addCommand = new AddTranslationCommand(this.program, this.log.child(LOGGER.validate), this.fs, this.utilService);
 
     this.program
       .version(this.version);
@@ -23,6 +25,7 @@ class SyncTranslations {
       .option('-d, --debug', 'Display verbose logs');
 
     this.program.addCommand(validateCommand.getCommand());
+    this.program.addCommand(addCommand.getCommand());
 
     this.log
       .setContextVisible(false)
@@ -31,8 +34,10 @@ class SyncTranslations {
   }
 
   run() {
-    this.program.parseAsync(process.argv);
-    this.log.setVerbose(this.program.debug === true);
+    this.program.parseAsync(process.argv)
+      .then(() => {
+        this.log.setVerbose(this.program.debug === true);
+      });
   }
 }
 
