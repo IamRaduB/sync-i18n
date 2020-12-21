@@ -13,6 +13,7 @@ export interface Answer {
   [key: string]: string;
 }
 
+// TODO: Write tests
 export class AddTranslationCommand {
   version = '0.0.1';
   private command: Command;
@@ -47,12 +48,12 @@ export class AddTranslationCommand {
       );
   }
 
-  addTranslation(answers: Answers, directory = 'i18n') {
+  addTranslation(answers: Answers) {
     return from(Object.keys(answers))
       .pipe(
         filter((keyName) => !['key', 'confirmation'].includes(keyName)),
         mergeMap((lang) => {
-          const filePath: string = join(process.cwd(), directory, `${lang}.json`);
+          const filePath: string = join(process.cwd(), this.program.dir, `${lang}.json`);
           return from(this.fileService.readFile(filePath))
             .pipe(
               map((fileData: any) => {

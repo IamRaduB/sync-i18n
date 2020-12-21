@@ -2,7 +2,13 @@
   "name": "Nume",
   "age": "Varsta",
   "address": {
-    "street": "Strada",
-    "number": "Nr"
+    "street": "Strada"
+  },
+  "ana": {
+    "are": {
+      "mere": "Ana are mere",
+      "capsuni": "Ana are capsuni",
+      "flori": "Ana are flori"
+    }
   }
 }

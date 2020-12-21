@@ -22,7 +22,8 @@ class SyncTranslations {
     this.program
       .version(this.version);
     this.program.description('Sync your translation files')
-      .option('-d, --debug', 'Display verbose logs');
+      .option('-d, --debug', 'Display verbose logs')
+      .option('--dir <dir>', 'Custom directory that holds logs. Defaults to "./i18n"');
 
     this.program.addCommand(validateCommand.getCommand());
     this.program.addCommand(addCommand.getCommand());
@@ -33,6 +34,8 @@ class SyncTranslations {
       .setContextVisible(true);
   }
 
+  // TODO: Add config file support that reads the directory or receives it as a parameter on the main command
+  // sync <directory ./i18n> [add|validate]
   run() {
     this.program.parseAsync(process.argv)
       .then(() => {

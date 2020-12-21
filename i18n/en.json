@@ -2,7 +2,13 @@
   "name": "Name",
   "age": "Age",
   "address": {
-    "street": "Street",
-    "number": "No"
+    "street": "Street"
+  },
+  "ana": {
+    "are": {
+      "mere": "Ana has apples",
+      "capsuni": "Ana has strawberries",
+      "flori": "Ana has flowers"
+    }
   }
 }

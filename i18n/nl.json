@@ -1,0 +1,14 @@
+{
+  "name": "Naam",
+  "age": "Leeftijd",
+  "address": {
+    "street": "Straat"
+  },
+  "ana": {
+    "are": {
+      "mere": "Ana heeft appels",
+      "capsuni": "Ana heeft aardbeien",
+      "flori": "Ana heeft bloemen"
+    }
+  }
+}
