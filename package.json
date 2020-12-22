@@ -8,9 +8,9 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "validate-all": "npm run build && node dist/src/index.js validate ./i18n en.json",
-    "validate-some": "npm run build && node dist/src/index.js validate ./i18n en.json ro.json",
-    "add": "npm run build && node dist/src/index.js --directory ./i18n add",
+    "validate-all": "npm run build && node dist/index.js --debug --dir ./i18n validate en.json",
+    "validate-some": "npm run build && node dist/index.js --debug --dir ./i18n validate en.json ro.json",
+    "add": "npm run build && node dist/index.js --dir ./i18n add",
     "test": "ts-mocha src/**/*.spec.ts"
   },
   "repository": {

@@ -5,6 +5,7 @@ import { UtilService } from '../services/util.service';
 import { join } from 'path';
 import { readdir } from 'fs';
 import { promisify } from 'util';
+import { Invalid } from '../util/error';
 
 const readdirPromise = promisify(readdir);
 
@@ -14,24 +15,25 @@ export class ValidateCommand {
   private command: Command;
 
   constructor(private program: Command, private log: Logger, private fileService: FileService, private utilService: UtilService) {
-    this.command = program.command('validate <inputDir> <rootFile> [specificFiles...]') as Command;
+    this.command = program.command('validate <rootFile> [specificFiles...]') as Command;
     this.setup();
   }
 
   setup() {
     this.command
       .version(this.version)
-      .action((inputDir: string, rootFile: string, specificFiles: string[]) => {
+      .action((rootFile: string, specificFiles: string[]) => {
+        this.log.info('Validating...');
         if (specificFiles && specificFiles.length) {
-          return this.validateSpecificFiles(inputDir, rootFile, specificFiles);
+          return this.validateSpecificFiles(this.program.dir, rootFile, specificFiles);
         }
 
-        return this.validateAllFiles(inputDir, rootFile);
+        return this.validateAllFiles(this.program.dir, rootFile);
       });
   }
 
-  async validateFile(root: any, langFile: string) {
-    this.log.info(`Validating file ${langFile}`);
+  async validateFile(rootLangData: any, langFile: string): Promise<boolean> {
+    this.log.debug(`Validating file ${langFile}`);
     let lang;
 
     try {
@@ -41,18 +43,19 @@ export class ValidateCommand {
       throw e;
     }
 
-    const result = this.utilService.compareLangObjects('', root, lang);
-    if (!result.length) {
-      this.log.info(`${langFile} validated successfully`);
+    const errors = this.utilService.compareLangObjects('', rootLangData, lang);
+    if (!errors.length) {
+      this.log.valid(langFile);
+      return true;
     }
 
-    this.log.error(result);
+    this.printErrors(errors, langFile);
+    return false;
   }
 
   async validateSpecificFiles(inputDir: string, rootFile: string, specificFiles: string[]) {
-    this.log.info(`Validating a set of files in ${inputDir}. Root ${rootFile}`);
-    this.log.debug(`Root file ${rootFile}`);
-    this.log.debug(`Specific files: ${specificFiles.join(',')}`);
+    this.log.debug(`Validating a subset of files in ${inputDir}. Root ${rootFile}`);
+    this.log.debug(`Root file ${rootFile}. Specific files: ${specificFiles.join(',')}`);
 
     let root: any;
     let rootPath = join(process.cwd(), inputDir, rootFile);
@@ -72,8 +75,7 @@ export class ValidateCommand {
   }
 
   async validateAllFiles(inputDir: string, rootFile: string) {
-    this.log.info(`Validating all files in ${inputDir}`);
-    this.log.debug(`Root: ${rootFile}`);
+    this.log.debug(`Validating all files in ${inputDir} against root ${rootFile}`);
 
     let root: any;
     let rootPath = join(process.cwd(), inputDir, rootFile);
@@ -94,6 +96,15 @@ export class ValidateCommand {
     });
 
     await Promise.all(promises);
+  }
+
+  printErrors(errors: Invalid[], langFile: string) {
+    errors.forEach((error) => {
+      this.log.invalid(langFile);
+      this.log.invalidDetails(error.message);
+      this.log.invalidDetails('Root:', error.rootValue);
+      this.log.invalidDetails(`${langFile}:`, error.lang);
+    });
   }
 
   getCommand(): Command {

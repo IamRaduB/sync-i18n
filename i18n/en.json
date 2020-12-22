@@ -2,7 +2,8 @@
   "name": "Name",
   "age": "Age",
   "address": {
-    "street": "Street"
+    "street": "Street",
+    "number": "Number"
   },
   "ana": {
     "are": {

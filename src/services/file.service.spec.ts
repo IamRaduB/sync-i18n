@@ -13,7 +13,7 @@ describe('FileService', () => {
   });
 
   describe('getLanguageFiles', () => {
-    it.only('should return the list of file names in the translations directory', async () => {
+    it('should return the list of file names in the translations directory', async () => {
       const expected = ['en', 'nl', 'ro'];
       const files = await fileService.getLanguageFiles();
       expect(files).to.deep.eq(expected);

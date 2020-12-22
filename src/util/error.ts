@@ -9,8 +9,8 @@ export class Invalid {
     this.rootValue = rootValue;
   }
 
-  toString() {
-    return `${this.message} - rootValue: ${JSON.stringify(this.rootValue)} / langValue: ${JSON.stringify(this.langValue)}`;
+  get lang() {
+    return this.langValue ? this.langValue : 'undefined';
   }
 }
 

@@ -2,7 +2,8 @@
   "name": "Naam",
   "age": "Leeftijd",
   "address": {
-    "street": "Straat"
+    "street": "Straat",
+    "number": "Nummer"
   },
   "ana": {
     "are": {

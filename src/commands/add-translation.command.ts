@@ -8,11 +8,6 @@ import { from, Observable } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { join } from 'path';
 
-export interface Answer {
-  key: string;
-  [key: string]: string;
-}
-
 // TODO: Write tests
 export class AddTranslationCommand {
   version = '0.0.1';
@@ -77,7 +72,7 @@ export class AddTranslationCommand {
         name: 'key',
         message: 'New key path'
       },
-      ...(await this.fileService.getLanguageFiles())
+      ...(await this.fileService.getLanguageFiles(this.program.dir))
         .map((langFile): Question => {
           return {
             type: 'input',
