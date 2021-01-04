@@ -44,10 +44,4 @@ export class FileService {
       throw e;
     }
   }
-
-  static async getVersion() {
-    const packageInfo = await readFile(join('__dirname', '../','package.json'), { encoding: 'utf8' });
-    const packageJson = JSON.parse(packageInfo);
-    return packageJson.version;
-  }
 }

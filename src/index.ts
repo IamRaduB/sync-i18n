@@ -22,8 +22,8 @@ export class SyncTranslations {
     this.program
       .version(this.version);
     this.program.description('Sync your translation files')
-      .option('-d, --debug', 'Display verbose logs')
-      .option('--dir <dir>', 'Custom directory that holds language files. Defaults to "./i18n"');
+      .option('-d, --debug', 'Display verbose logs', false)
+      .option('--dir <dir>', 'Custom directory that holds language files', './i18n');
 
     this.program.addCommand(validateCommand.getCommand());
     this.program.addCommand(addCommand.getCommand());
@@ -46,11 +46,3 @@ export class SyncTranslations {
     }
   }
 }
-
-FileService.getVersion()
-  .then((version: string) => {
-    const utilService = new UtilService();
-    const mainLog = new LoggerService(LOGGER.main);
-    const fsLog = mainLog.child(LOGGER.fs);
-    new SyncTranslations(version, new FileService(fsLog), mainLog, utilService);
-  });

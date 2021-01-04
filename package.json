@@ -1,10 +1,10 @@
 {
-  "name": "@iamradub/sync-locales",
+  "name": "@iamradub/sync-i18n",
   "version": "0.0.1",
-  "description": "Command line tool that allows you to sync translation files",
-  "main": "dist/src/index.js",
+  "description": "Command line tool that takes the hassle out of keeping your JSON i18n files in sync",
+  "main": "dist/index.js",
   "bin": {
-    "sync-i18n": "dist/src/index.js"
+    "insync": "dist/index.js"
   },
   "scripts": {
     "build": "tsc -b",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IamRaduB/sync-locales.git"
+    "url": "git+https://github.com/IamRaduB/sync-i18n.git"
   },
   "author": "IamRaduB",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IamRaduB/sync-locales/issues"
+    "url": "https://github.com/IamRaduB/sync-i18n/issues"
   },
-  "homepage": "https://github.com/IamRaduB/sync-locales#readme",
+  "homepage": "https://github.com/IamRaduB/sync-i18n#readme",
   "dependencies": {
     "chai": "^4.2.0",
     "chalk": "^4.1.0",
