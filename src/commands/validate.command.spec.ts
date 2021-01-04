@@ -37,7 +37,7 @@ describe('ValidateCommand', () => {
   });
 
   describe('validateFile', () => {
-    it.only('should throw an assertion error if the files do not match', async () => {
+    it('should throw an assertion error if the files do not match', async () => {
       const result = await cmd.validateFile({
         "name": "Name",
         "age": "Age",
