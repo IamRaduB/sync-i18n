@@ -4,7 +4,7 @@ Command line tool that takes the hassle out of keeping your JSON i18n files in s
 
 ## Installation
 
-`npm i -g @iamradub/i18n-sync`
+`npm i -g @hovrcat/i18n-sync`
 
 #### Local setup
 `npm install`

@@ -1,5 +1,5 @@
 {
-  "name": "@iamradub/sync-i18n",
+  "name": "@hovrcat/sync-i18n",
   "version": "1.0.0",
   "description": "Command line tool that takes the hassle out of keeping your JSON i18n files in sync",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/IamRaduB/sync-i18n.git"
   },
-  "author": "IamRaduB",
+  "author": "RaduB",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/IamRaduB/sync-i18n/issues"
