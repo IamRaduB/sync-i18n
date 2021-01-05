@@ -17,7 +17,7 @@ Command line tool that takes the hassle out of keeping your JSON i18n files in s
 
 ### insync
 
-| Parameters | Required | Default | Description | 
+| Options | Required | Default | Description | 
 | --- | --- | --- | --- |
 | -d, --debug | ❌ | false | Enables debug logging |
 | --dir <dir> | ❌ | ./i18n | Specify the directory where the i18n files exist |
@@ -30,7 +30,7 @@ Compare some or all translation files against one provided as root
 
 | Parameters | Required | Description |
 | --- | --- | --- |
-| rootFile | ✔ | The root language file against which comparison will be made |
+| root file | ✔ | The root language file against which comparison will be made |
 | lang files | ❌ | Translation file names to be validated, space separated. If no file names are passed, all in the provided **i18n** directory will be validated (except for the root file) |
 
 Example:
@@ -56,4 +56,4 @@ Example:
     - if a key path is missing, start the prompt and request a value
     - if an orphan key is present, remove it automatically
     - output a report of the actions taken
-
+4. Add command - add flag to allow reordering of the keys alphabetically
