@@ -40,20 +40,25 @@ describe('SortCommand', () => {
     it('should sort the JSON file alphabetically', (done) => {
       program.dir = 'i18n';
       fileService.writeJsonToFile.resolves();
-      cmd.sort().subscribe(() => {
-        const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
-        expect(translationData).deep.eq({
-          address: {
-            number: 'Numar',
-            street: 'Strada',
-          },
-          age: 'Varsta',
-          name: 'Nume',
-        });
-        expect(Object.keys(translationData)).sorted();
-        expect(Object.keys(translationData.address)).sorted();
-        done();
-      });
+      cmd.sort().subscribe(
+        () => {
+          const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
+          expect(translationData).deep.eq({
+            address: {
+              number: 'Numar',
+              street: 'Strada',
+            },
+            age: 'Varsta',
+            name: 'Nume',
+          });
+          expect(Object.keys(translationData)).sorted();
+          expect(Object.keys(translationData.address)).sorted();
+        },
+        () => {},
+        () => {
+          done();
+        },
+      );
     });
   });
 });

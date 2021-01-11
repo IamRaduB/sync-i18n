@@ -105,20 +105,25 @@ describe('ValidateCommand', () => {
           en: 'Addition',
           confirmation: 'yes',
         })
-        .subscribe(() => {
-          const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
-          expect(translationData).deep.eq({
-            address: {
-              add: 'Addition',
-              number: 'Number',
-              street: 'Street',
-            },
-            user: 'John',
-          });
-          expect(Object.keys(translationData)).sorted();
-          expect(Object.keys(translationData.address)).sorted();
-          done();
-        });
+        .subscribe(
+          () => {
+            const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
+            expect(translationData).deep.eq({
+              address: {
+                add: 'Addition',
+                number: 'Number',
+                street: 'Street',
+              },
+              user: 'John',
+            });
+            expect(Object.keys(translationData)).sorted();
+            expect(Object.keys(translationData.address)).sorted();
+          },
+          () => {},
+          () => {
+            done();
+          },
+        );
     });
 
     it('should NOT reorder the JSON keys if the --order flag was NOT set', (done) => {
