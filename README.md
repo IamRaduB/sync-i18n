@@ -39,6 +39,10 @@ Example:
 ###### **add**
 Launches an interactive prompt that guides you through adding new keys in the files
 
+| Option | Required | Description |
+| --- | --- | --- |
+| -o, --order | ❌ | Instruct the tool to order the keys after adding the new key |
+
 | Prompt | Description |
 | --- | --- |
 | New key path | A valid JSON path to be created. If the paths already exists, the value will be overwritten |
@@ -46,7 +50,13 @@ Launches an interactive prompt that guides you through adding new keys in the fi
 | Is this correct? | Confirmation of validity of the provided information |
 
 Example:
-`insync [--dir path/to/i18n] add`
+`insync [--dir path/to/i18n] add [--order]`
+
+###### **sort**
+Standalone command to sort the json keys in all i18n files alphabetically
+
+Example:
+`insync [--dir path/to/i18n] sort`
 
 ## Upcoming features
 1. root file and i18n files to be validated should be passed with flags, to improve readability
@@ -56,4 +66,3 @@ Example:
     - if a key path is missing, start the prompt and request a value
     - if an orphan key is present, remove it automatically
     - output a report of the actions taken
-4. Add command - add flag to allow reordering of the keys alphabetically
