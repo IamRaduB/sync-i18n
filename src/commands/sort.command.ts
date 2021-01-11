@@ -15,12 +15,15 @@ export class SortCommand {
   }
 
   setup() {
-    this.command.action(() => {});
+    this.command.action(() => {
+      this.sort().subscribe();
+    });
   }
 
   sort() {
     return from(this.fileService.getLanguageFiles(this.program.dir)).pipe(
-      mergeMap((lang) => {
+      mergeMap((langFiles) => from(langFiles)),
+      mergeMap((lang: string) => {
         const filePath: string = join(process.cwd(), this.program.dir, `${lang}.json`);
         return from(this.fileService.readFile(filePath)).pipe(
           map((fileData: any) => {
