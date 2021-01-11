@@ -26,4 +26,4 @@ typings/
 .env
 .env.test
 
-src
+src/*
