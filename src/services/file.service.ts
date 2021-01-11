@@ -36,7 +36,7 @@ export class FileService {
 
   async writeJsonToFile(file: string, data: any) {
     try {
-      await writeFile(file, JSON.stringify(data, null, 2), {
+      return writeFile(file, JSON.stringify(data, null, 2), {
         encoding: 'utf8',
       });
     } catch (e) {

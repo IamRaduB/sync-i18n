@@ -4,8 +4,10 @@ import { Logger, LoggerService } from '../services/logger.service';
 import { FileService } from '../services/file.service';
 import { UtilService } from '../services/util.service';
 import { AddTranslationCommand } from './add-translation.command';
-import { expect } from 'chai';
-import { tap } from 'rxjs/operators';
+import chai, { expect } from 'chai';
+import chaiArrays from 'chai-arrays';
+
+chai.use(chaiArrays);
 
 describe('ValidateCommand', () => {
   let cmd: AddTranslationCommand;
@@ -15,17 +17,15 @@ describe('ValidateCommand', () => {
   let fileService: SinonStubbedInstance<FileService>;
   let utilService: UtilService;
 
-  before(() => {
+  beforeEach(() => {
     program = createStubInstance(Command);
     command = createStubInstance(Command);
     fileService = createStubInstance(FileService);
     log = new LoggerService('test', true);
     utilService = new UtilService();
-  });
-
-  beforeEach(() => {
     program.command.returns(command);
     command.version.returns(command);
+    command.option.returns(command);
     command.action.returns(command);
     fileService.readFile.resolves({
       "name": "Nume",
@@ -78,6 +78,70 @@ describe('ValidateCommand', () => {
               add: 'Addition',
             },
           });
+          done();
+        });
+    });
+
+    it('should reorder the JSON keys if the --order flag was set', (done) => {
+      program.dir = 'i18n';
+      command.order = true;
+      fileService.readFile.resolves({
+        user: 'John',
+        address: {
+          street: 'Street',
+          number: 'Number',
+        },
+      });
+      fileService.writeJsonToFile.resolves();
+      cmd.addTranslation({
+        key: 'address.add',
+        en: 'Addition',
+        confirmation: 'yes',
+      })
+        .subscribe(() => {
+          const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
+          expect(translationData).deep.eq({
+            address: {
+              add: 'Addition',
+              number: 'Number',
+              street: 'Street',
+            },
+            user: 'John',
+          });
+          expect(Object.keys(translationData)).sorted();
+          expect(Object.keys(translationData.address)).sorted();
+          done();
+        });
+    });
+
+    it('should NOT reorder the JSON keys if the --order flag was NOT set', (done) => {
+      program.dir = 'i18n';
+      command.order = true;
+      fileService.readFile.resolves({
+        user: 'John',
+        address: {
+          street: 'Street',
+          number: 'Number',
+        },
+      });
+      fileService.writeJsonToFile.resolves();
+      cmd.addTranslation({
+        key: 'address.add',
+        en: 'Addition',
+        confirmation: 'yes',
+      })
+        .subscribe(() => {
+          const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
+          expect(translationData).deep.eq({
+            user: 'John',
+            address: {
+              street: 'Street',
+              number: 'Number',
+              add: 'Addition',
+            },
+          });
+          expect(Object.keys(translationData)).sorted();
+          expect(Object.keys(translationData.address)).sorted();
           done();
         });
     });
