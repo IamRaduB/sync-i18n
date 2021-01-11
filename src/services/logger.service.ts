@@ -1,21 +1,28 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 
 export interface Logger {
   child(context: string): Logger;
+
   title(...args: any[]): this;
+
   info(...args: any[]): this;
+
   error(...args: any[]): this;
+
   debug(...args: any[]): this;
+
   valid(...args: any[]): this;
+
   invalid(...args: any[]): this;
+
   invalidDetails(...args: any[]): this;
 
   setVerbose(value: boolean): void;
 }
 
-export  class LoggerService implements Logger{
-  constructor(private context: string, private verbose: boolean = false) {
-  }
+export class LoggerService implements Logger {
+  constructor(private context: string, private verbose: boolean = false) {}
 
   child(context: string): Logger {
     return new LoggerService(`${this.context}-${context}`, this.verbose);
@@ -72,4 +79,3 @@ export  class LoggerService implements Logger{
     return this;
   }
 }
-

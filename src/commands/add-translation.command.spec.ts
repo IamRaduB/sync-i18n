@@ -1,11 +1,11 @@
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
 import { Command } from 'commander';
+import chai, { expect } from 'chai';
+import chaiArrays from 'chai-arrays';
 import { Logger, LoggerService } from '../services/logger.service';
 import { FileService } from '../services/file.service';
 import { UtilService } from '../services/util.service';
 import { AddTranslationCommand } from './add-translation.command';
-import chai, { expect } from 'chai';
-import chaiArrays from 'chai-arrays';
 
 chai.use(chaiArrays);
 
@@ -28,13 +28,18 @@ describe('ValidateCommand', () => {
     command.option.returns(command);
     command.action.returns(command);
     fileService.readFile.resolves({
-      "name": "Nume",
-      "age": "Varsta",
-      "address": {
-        "number": "Numar"
+      name: 'Nume',
+      age: 'Varsta',
+      address: {
+        number: 'Numar',
       },
     });
-    cmd = new AddTranslationCommand((program as unknown) as Command, log, (fileService as unknown) as FileService, utilService);
+    cmd = new AddTranslationCommand(
+      (program as unknown) as Command,
+      log,
+      (fileService as unknown) as FileService,
+      utilService,
+    );
   });
 
   describe('createQuestions', () => {
@@ -64,11 +69,12 @@ describe('ValidateCommand', () => {
         },
       });
       fileService.writeJsonToFile.resolves();
-      cmd.addTranslation({
-        key: 'address.add',
-        en: 'Addition',
-        confirmation: 'yes',
-      })
+      cmd
+        .addTranslation({
+          key: 'address.add',
+          en: 'Addition',
+          confirmation: 'yes',
+        })
         .subscribe(() => {
           const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
           expect(translationData).deep.eq({
@@ -93,11 +99,12 @@ describe('ValidateCommand', () => {
         },
       });
       fileService.writeJsonToFile.resolves();
-      cmd.addTranslation({
-        key: 'address.add',
-        en: 'Addition',
-        confirmation: 'yes',
-      })
+      cmd
+        .addTranslation({
+          key: 'address.add',
+          en: 'Addition',
+          confirmation: 'yes',
+        })
         .subscribe(() => {
           const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
           expect(translationData).deep.eq({
@@ -125,11 +132,12 @@ describe('ValidateCommand', () => {
         },
       });
       fileService.writeJsonToFile.resolves();
-      cmd.addTranslation({
-        key: 'address.add',
-        en: 'Addition',
-        confirmation: 'yes',
-      })
+      cmd
+        .addTranslation({
+          key: 'address.add',
+          en: 'Addition',
+          confirmation: 'yes',
+        })
         .subscribe(() => {
           const translationData = fileService.writeJsonToFile.getCall(0).lastArg;
           expect(translationData).deep.eq({

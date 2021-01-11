@@ -1,35 +1,38 @@
 import { Command } from 'commander';
-import { Logger } from '../services/logger.service';
-import { FileService } from '../services/file.service';
-import { UtilService } from '../services/util.service';
 import { join } from 'path';
 import { readdir } from 'fs';
 import { promisify } from 'util';
+import { Logger } from '../services/logger.service';
+import { FileService } from '../services/file.service';
+import { UtilService } from '../services/util.service';
 import { Invalid } from '../util/error';
 
 const readdirPromise = promisify(readdir);
 
-
 export class ValidateCommand {
   private version = '0.0.1';
+
   private command: Command;
 
-  constructor(private program: Command, private log: Logger, private fileService: FileService, private utilService: UtilService) {
+  constructor(
+    private program: Command,
+    private log: Logger,
+    private fileService: FileService,
+    private utilService: UtilService,
+  ) {
     this.command = program.command('validate <rootFile> [specificFiles...]') as Command;
     this.setup();
   }
 
   setup() {
-    this.command
-      .version(this.version)
-      .action((rootFile: string, specificFiles: string[]) => {
-        this.log.info('Validating...');
-        if (specificFiles && specificFiles.length) {
-          return this.validateSpecificFiles(this.program.dir, rootFile, specificFiles);
-        }
+    this.command.version(this.version).action((rootFile: string, specificFiles: string[]) => {
+      this.log.info('Validating...');
+      if (specificFiles && specificFiles.length) {
+        return this.validateSpecificFiles(this.program.dir, rootFile, specificFiles);
+      }
 
-        return this.validateAllFiles(this.program.dir, rootFile);
-      });
+      return this.validateAllFiles(this.program.dir, rootFile);
+    });
   }
 
   async validateFile(rootLangData: any, langFile: string): Promise<boolean> {
@@ -58,7 +61,7 @@ export class ValidateCommand {
     this.log.debug(`Root file ${rootFile}. Specific files: ${specificFiles.join(',')}`);
 
     let root: any;
-    let rootPath = join(process.cwd(), inputDir, rootFile);
+    const rootPath = join(process.cwd(), inputDir, rootFile);
     try {
       root = await this.fileService.readFile(rootPath);
     } catch (e) {
@@ -78,7 +81,7 @@ export class ValidateCommand {
     this.log.debug(`Validating all files in ${inputDir} against root ${rootFile}`);
 
     let root: any;
-    let rootPath = join(process.cwd(), inputDir, rootFile);
+    const rootPath = join(process.cwd(), inputDir, rootFile);
     try {
       root = await this.fileService.readFile(rootPath);
     } catch (e) {
@@ -88,8 +91,7 @@ export class ValidateCommand {
 
     // read the contents of the translations directory
     // and filter out the root file
-    const fileNames = (await readdirPromise(join(process.cwd(), inputDir)))
-      .filter((fname) => fname !== rootFile);
+    const fileNames = (await readdirPromise(join(process.cwd(), inputDir))).filter((fname) => fname !== rootFile);
 
     const promises = fileNames.map((fname) => {
       return this.validateFile(root, join(inputDir, fname));

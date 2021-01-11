@@ -9,19 +9,28 @@ import { AddTranslationCommand } from './commands/add-translation.command';
 export class SyncTranslations {
   private program: Command;
 
-  constructor(private version: string, private fs: FileService, private log: LoggerService, private utilService: UtilService) {
+  constructor(
+    private version: string,
+    private fs: FileService,
+    private log: LoggerService,
+    private utilService: UtilService,
+  ) {
     this.program = new Command(NAME) as Command;
     this.setup();
-    this.run();
   }
 
   setup() {
-    const validateCommand = new ValidateCommand(this.program, this.log.child(LOGGER.validate), this.fs, this.utilService);
+    const validateCommand = new ValidateCommand(
+      this.program,
+      this.log.child(LOGGER.validate),
+      this.fs,
+      this.utilService,
+    );
     const addCommand = new AddTranslationCommand(this.program, this.log.child(LOGGER.add), this.fs, this.utilService);
 
+    this.program.version(this.version);
     this.program
-      .version(this.version);
-    this.program.description('Sync your translation files')
+      .description('Sync your translation files')
       .option('-d, --debug', 'Display verbose logs', false)
       .option('--dir <dir>', 'Custom directory that holds language files', './i18n');
 
@@ -42,7 +51,7 @@ export class SyncTranslations {
     try {
       await this.fs.getLanguageFiles(dir);
     } catch (e) {
-      this.log.error(`Path ${dir} to language files is invalid`, e)
+      this.log.error(`Path ${dir} to language files is invalid`, e);
     }
   }
 }

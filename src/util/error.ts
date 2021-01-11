@@ -1,6 +1,9 @@
+/* eslint-disable-next-line max-classes-per-file */
 export class Invalid {
   message: string;
+
   rootValue: any;
+
   langValue: any;
 
   constructor(message: string, rootValue: any, langValue: any) {

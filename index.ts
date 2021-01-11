@@ -9,4 +9,5 @@ import { SyncTranslations } from './src';
 const utilService = new UtilService();
 const mainLog = new LoggerService(LOGGER.main);
 const fsLog = mainLog.child(LOGGER.fs);
-new SyncTranslations(v.version, new FileService(fsLog), mainLog, utilService);
+const insync = new SyncTranslations(v.version, new FileService(fsLog), mainLog, utilService);
+insync.run();

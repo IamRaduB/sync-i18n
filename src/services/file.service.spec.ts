@@ -1,7 +1,7 @@
 import { createStubInstance, SinonStubbedInstance } from 'sinon';
+import { expect } from 'chai';
 import { LoggerService } from './logger.service';
 import { FileService } from './file.service';
-import { expect } from 'chai';
 
 describe('FileService', () => {
   let log: SinonStubbedInstance<LoggerService>;

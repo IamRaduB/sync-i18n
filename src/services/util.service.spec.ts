@@ -11,12 +11,12 @@ describe('UtilService', () => {
   describe('compareLangObjects', () => {
     it('should identify undefined properties in the root level', () => {
       const root = {
-        a: "1",
-        b: "2"
+        a: '1',
+        b: '2',
       };
 
       const lang = {
-        a: "1",
+        a: '1',
       };
 
       const result = utilService.compareLangObjects('', root, lang);
@@ -30,15 +30,15 @@ describe('UtilService', () => {
 
     it('should identify out of sync properties in the root level', () => {
       const root = {
-        a: "1",
-        b: "2"
+        a: '1',
+        b: '2',
       };
 
       const lang = {
-        a: "1",
+        a: '1',
         b: {
-          c: "2"
-        }
+          c: '2',
+        },
       };
 
       const result = utilService.compareLangObjects('', root, lang);
@@ -47,7 +47,7 @@ describe('UtilService', () => {
         message: 'Property b is out of sync in lang file',
         rootValue: '2',
         langValue: {
-          c: '2'
+          c: '2',
         },
       });
     });
@@ -59,7 +59,7 @@ describe('UtilService', () => {
         address: {
           street: 'street',
           number: 'number',
-        }
+        },
       };
 
       const lang = {
@@ -67,7 +67,7 @@ describe('UtilService', () => {
         age: 'varsta',
         address: {
           street: 'strada',
-        }
+        },
       };
 
       const result = utilService.compareLangObjects('', root, lang);
@@ -83,7 +83,7 @@ describe('UtilService', () => {
         address: {
           street: 'street',
           number: 'number',
-        }
+        },
       };
 
       const lang = {
@@ -92,10 +92,10 @@ describe('UtilService', () => {
         address: {
           street: 'strada',
           number: {
-            value: "12",
+            value: '12',
             addition: 'B',
-          }
-        }
+          },
+        },
       };
 
       const result = utilService.compareLangObjects('', root, lang);
@@ -116,9 +116,9 @@ describe('UtilService', () => {
           street: 'street',
           number: {
             value: 'value',
-            addition: 'suffix'
-          }
-        }
+            addition: 'suffix',
+          },
+        },
       };
 
       const lang = {
@@ -126,8 +126,8 @@ describe('UtilService', () => {
         address: 'strada',
         address2: {
           street: 'strada',
-          number: '22'
-        }
+          number: '22',
+        },
       };
 
       const result = utilService.compareLangObjects('', root, lang);
@@ -143,8 +143,8 @@ describe('UtilService', () => {
       const [keyPath, value] = ['parents.mother', 'Mother'];
       const expected = {
         parents: {
-          mother: 'Mother'
-        }
+          mother: 'Mother',
+        },
       };
 
       const result = utilService.createEntry(keyPath, value);

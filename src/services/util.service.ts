@@ -7,12 +7,14 @@ export class UtilService {
 
     return rootKeys
       .flatMap((rkey) => {
-        let keyPath = path ? path + '.' : '';
+        const keyPath = path ? `${path}.` : '';
 
         // consider undefined and empty string as "missing"
         // empty string is marked as missing only of the root file has an actual string value
-        if (langLevel[rkey] === undefined ||
-          (typeof rootLevel[rkey] === 'string' && rootLevel[rkey] !== '' && langLevel[rkey] === '')) {
+        if (
+          langLevel[rkey] === undefined ||
+          (typeof rootLevel[rkey] === 'string' && rootLevel[rkey] !== '' && langLevel[rkey] === '')
+        ) {
           return new NotFoundError(keyPath, rkey, rootLevel[rkey], langLevel[rkey]);
         }
 
@@ -26,7 +28,7 @@ export class UtilService {
 
         return null;
       })
-      .filter(err => err !== null) as Invalid[];
+      .filter((err) => err !== null) as Invalid[];
   }
 
   createEntry(keyPath: string, value: string) {

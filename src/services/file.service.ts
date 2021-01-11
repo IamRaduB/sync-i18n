@@ -1,23 +1,21 @@
 import { readFile as rf, readdir, writeFile as wf } from 'fs';
 import { promisify } from 'util';
+import { join } from 'path';
 import { Logger } from './logger.service';
-import { join } from "path";
 
 const readFile = promisify(rf);
 const readDir = promisify(readdir);
 const writeFile = promisify(wf);
 
 export class FileService {
-  constructor(private log: Logger) {
-  }
+  constructor(private log: Logger) {}
 
   async getLanguageFiles(directory = 'i18n') {
     const dirPath = join(process.cwd(), directory);
     try {
-      return (await readDir(dirPath))
-        .map((file) => {
-          return file.substring(0, file.lastIndexOf('.'));
-        });
+      return (await readDir(dirPath)).map((file) => {
+        return file.substring(0, file.lastIndexOf('.'));
+      });
     } catch (e) {
       this.log.error(`Unable to read directory ${directory}`);
       throw e;

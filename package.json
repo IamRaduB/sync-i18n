@@ -7,11 +7,17 @@
     "insync": "dist/index.js"
   },
   "scripts": {
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint **/*.ts",
+    "test": "ts-mocha src/**/*.spec.ts",
     "build": "tsc -b",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "git add -A src",
     "validate-all": "npm run build && node dist/index.js --debug --dir ./i18n validate en.json",
     "validate-some": "npm run build && node dist/index.js --debug --dir ./i18n validate en.json ro.json",
-    "add": "npm run build && node dist/index.js --dir ./i18n add -o",
-    "test": "ts-mocha src/**/*.spec.ts"
+    "add": "npm run build && node dist/index.js --dir ./i18n add -o"
   },
   "repository": {
     "type": "git",
@@ -49,10 +55,19 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.20",
     "@types/sinon": "^9.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
     "chai": "^4.2.0",
     "chai-arrays": "^2.2.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
     "mocha": "^8.2.1",
     "npm": "^6.14.11",
+    "prettier": "^2.2.1",
     "sinon": "^9.2.3",
     "ts-mocha": "^8.0.0",
     "typescript": "^4.1.3"
