@@ -10,8 +10,6 @@ import { Invalid } from '../util/error';
 const readdirPromise = promisify(readdir);
 
 export class ValidateCommand {
-  private version = '0.0.1';
-
   private command: Command;
 
   constructor(
@@ -25,7 +23,7 @@ export class ValidateCommand {
   }
 
   setup() {
-    this.command.version(this.version).action((rootFile: string, specificFiles: string[]) => {
+    this.command.action((rootFile: string, specificFiles: string[]) => {
       this.log.info('Validating...');
       if (specificFiles && specificFiles.length) {
         return this.validateSpecificFiles(this.program.dir, rootFile, specificFiles);

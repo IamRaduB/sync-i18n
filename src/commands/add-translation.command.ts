@@ -10,8 +10,6 @@ import { FileService } from '../services/file.service';
 import { UtilService } from '../services/util.service';
 
 export class AddTranslationCommand {
-  version = '0.0.1';
-
   private command: Command;
 
   constructor(
@@ -26,7 +24,6 @@ export class AddTranslationCommand {
 
   setup() {
     this.command
-      .version(this.version)
       .option('-o, --order', 'Instruct the command to order the keys added in alphabetical order', false)
       .action(() => {
         this.loadPrompt().subscribe();

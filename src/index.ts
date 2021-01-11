@@ -5,6 +5,7 @@ import { LOGGER, NAME } from './config/constants';
 import { ValidateCommand } from './commands/validate.command';
 import { UtilService } from './services/util.service';
 import { AddTranslationCommand } from './commands/add-translation.command';
+import { SortCommand } from './commands/sort.command';
 
 export class SyncTranslations {
   private program: Command;
@@ -27,6 +28,7 @@ export class SyncTranslations {
       this.utilService,
     );
     const addCommand = new AddTranslationCommand(this.program, this.log.child(LOGGER.add), this.fs, this.utilService);
+    const sortCommand = new SortCommand(this.program, this.log.child(LOGGER.sort), this.fs);
 
     this.program.version(this.version);
     this.program
@@ -36,6 +38,7 @@ export class SyncTranslations {
 
     this.program.addCommand(validateCommand.getCommand());
     this.program.addCommand(addCommand.getCommand());
+    this.program.addCommand(sortCommand.getCommand());
 
     this.log.title(NAME, `v${this.version}`);
   }
