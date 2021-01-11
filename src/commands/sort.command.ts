@@ -16,15 +16,29 @@ export class SortCommand {
 
   setup() {
     this.command.action(() => {
-      this.sort().subscribe();
+      this.log.info('Sorting language files...');
+      this.sort().subscribe(
+        () => {},
+        (err) => {
+          this.log.error('An error occurred while sorting the language files');
+          this.log.error(err);
+        },
+        () => {
+          this.log.info('✔ Sorting complete!');
+        },
+      );
     });
   }
 
   sort() {
     return from(this.fileService.getLanguageFiles(this.program.dir)).pipe(
-      mergeMap((langFiles) => from(langFiles)),
+      mergeMap((langFiles) => {
+        this.log.info(`Found ${langFiles.length} language files`);
+        return from(langFiles);
+      }),
       mergeMap((lang: string) => {
         const filePath: string = join(process.cwd(), this.program.dir, `${lang}.json`);
+        this.log.info(`Sorting ${lang} file...`);
         return from(this.fileService.readFile(filePath)).pipe(
           map((fileData: any) => {
             return [filePath, fileData];
@@ -38,6 +52,7 @@ export class SortCommand {
       }),
       // save the updated json
       mergeMap(([filePath, combined]) => {
+        this.log.debug(`${filePath} sorted`);
         return this.fileService.writeJsonToFile(filePath, combined);
       }),
     );
