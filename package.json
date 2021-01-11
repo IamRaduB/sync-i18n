@@ -1,6 +1,6 @@
 {
   "name": "@hovrcat/sync-i18n",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Command line tool that takes the hassle out of keeping your JSON i18n files in sync",
   "main": "dist/index.js",
   "bin": {
