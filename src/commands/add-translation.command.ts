@@ -8,8 +8,9 @@ import { join } from 'path';
 import { Logger } from '../services/logger.service';
 import { FileService } from '../services/file.service';
 import { UtilService } from '../services/util.service';
+import { AppCommand } from '../util/app.command';
 
-export class AddTranslationCommand {
+export class AddTranslationCommand implements AppCommand {
   private command: Command;
 
   constructor(
@@ -116,5 +117,9 @@ export class AddTranslationCommand {
 
   getCommand(): Command {
     return this.command;
+  }
+
+  setVerbose(state: boolean) {
+    this.log.setVerbose(state);
   }
 }

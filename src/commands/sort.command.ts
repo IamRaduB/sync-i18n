@@ -5,8 +5,9 @@ import { join } from 'path';
 import { Reorder } from '@hovrcat/reorder-json';
 import { FileService } from '../services/file.service';
 import { Logger } from '../services/logger.service';
+import { AppCommand } from '../util/app.command';
 
-export class SortCommand {
+export class SortCommand implements AppCommand {
   private command: Command;
 
   constructor(private program: Command, private log: Logger, private fileService: FileService) {
@@ -60,5 +61,9 @@ export class SortCommand {
 
   getCommand(): Command {
     return this.command;
+  }
+
+  setVerbose(state: boolean) {
+    this.log.setVerbose(state);
   }
 }

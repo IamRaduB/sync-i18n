@@ -6,10 +6,11 @@ import { Logger } from '../services/logger.service';
 import { FileService } from '../services/file.service';
 import { UtilService } from '../services/util.service';
 import { Invalid } from '../util/error';
+import { AppCommand } from '../util/app.command';
 
 const readdirPromise = promisify(readdir);
 
-export class ValidateCommand {
+export class ValidateCommand implements AppCommand {
   private command: Command;
 
   constructor(
@@ -20,6 +21,10 @@ export class ValidateCommand {
   ) {
     this.command = program.command('validate <rootFile> [specificFiles...]') as Command;
     this.setup();
+  }
+
+  setVerbose(state: boolean) {
+    this.log.setVerbose(state);
   }
 
   setup() {
